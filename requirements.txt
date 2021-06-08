@@ -1,0 +1,4 @@
+aiogram==2.13
+environs==9.3.2
+siaskynet==2.2.0
+pyshorteners==1.0.1
