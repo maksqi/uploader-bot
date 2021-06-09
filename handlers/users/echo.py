@@ -27,7 +27,7 @@ async def upload_file(message: types.Message):
         # print(file_extension)
         await bot.download_file(file.file_path, f'data/temp/{file_name}')
 
-        url = await ya_upload(f'data\\temp\\{file_name}', file_name, str(message.chat.id))
+        url = await ya_upload(f'data/temp/{file_name}', file_name, str(message.chat.id))
         print('Upload successful: ' + url)
         os.remove(f'data/temp/{file_name}')
 
