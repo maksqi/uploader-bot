@@ -15,6 +15,8 @@ async def upload_file(message: types.Message):
     if not os.path.exists('data/temp'):
         os.mkdir('data/temp')
 
+    mess = await message.reply('*Uploading file...*', parse_mode='Markdown')
+
     try:
         user_id = message.chat.id
         file_name = message.document.file_name
@@ -32,7 +34,7 @@ async def upload_file(message: types.Message):
         bitly, cuttly, dagb = await short_link(url)
 
         txt = [
-            f'*The file was successfully uploaded.',
+            f'*The file was successfully uploaded.\n',
             f'1. {bitly}',
             f'2. {cuttly}',
             f'4. {dagb}*',
@@ -41,10 +43,10 @@ async def upload_file(message: types.Message):
         markup = types.InlineKeyboardMarkup(row_width=2)
         markup.add(types.InlineKeyboardButton('🟢 Download file', url=url))
 
-        await message.reply('\n'.join(txt), parse_mode='Markdown', reply_markup=markup, disable_web_page_preview=True)
+        await mess.edit_text('\n'.join(txt), parse_mode='Markdown', reply_markup=markup, disable_web_page_preview=True)
 
     except FileIsTooBig:
-        await message.reply("*Telegram doesn't support files larger than 20Mb.*", parse_mode='Markdown')
+        await mess.edit_text("*Telegram doesn't support files larger than 20Mb.*", parse_mode='Markdown')
 
 
 @dp.message_handler(content_types=types.ContentTypes.PHOTO)
